@@ -18,13 +18,23 @@ public class Sparksql {
         Dataset<Row> df = spark.read().json("D:/spark_data/people.json");
         df.registerTempTable("people");
         //df.show();
-       // df.printSchema();
+        // df.printSchema();
 //        df.select("name","age").show();
-       // df.filter(df.col("age").geq(10)).show();
+        // df.filter(df.col("age").geq(10)).show();
         //df.sort(df.col("age").desc()).show();
         //df.groupBy("age").count().show();
-        Dataset<Row> sql = spark.sql("select * from people where age > 20");
-        sql.show();
+        // Dataset<Row> sql = spark.sql("select name from people where age > 20");
+        //sql.show();
+        Dataset<Row> load = spark.read().format("jdbc").option("url", "jdbc:mysql://localhost:3306/news")
+                .option("driver", "com.mysql.jdbc.Driver")
+                .option("dbtable", "news")
+                .option("user", "root")
+                .option("password", "root").load();
+        //load.show();
+        load.registerTempTable("news");
+        //spark.sql("select * from news where title  like  '美%'").show();
+        spark.sql("select * from news where news_time  >  '2019-04-10'").show();
+
 
     }
 }
