@@ -1,3 +1,6 @@
+package com.imooc.java.spark;
+
+import com.imooc.java.po.Person;
 import org.apache.spark.api.java.function.ForeachFunction;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Encoders;

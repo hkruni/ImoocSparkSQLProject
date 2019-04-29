@@ -1,9 +1,11 @@
-import org.apache.spark.api.java.function.ForeachFunction;
-import org.apache.spark.api.java.function.MapFunction;
-import org.apache.spark.sql.*;
+package com.imooc.java.spark;
 
-import java.util.HashMap;
-import java.util.List;
+import com.imooc.java.po.Count;
+import org.apache.spark.api.java.function.ForeachFunction;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Encoders;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
 
 public class Sparksql {
 

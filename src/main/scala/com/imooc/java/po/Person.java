@@ -1,3 +1,5 @@
+package com.imooc.java.po;
+
 public class Person {
 
     private String name;
