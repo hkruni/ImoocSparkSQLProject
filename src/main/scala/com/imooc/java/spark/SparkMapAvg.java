@@ -13,7 +13,28 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * 求每个单词分值的平均值
+ * 求每个单词分值的平均值 input1.txt
+ * spark 2
+ * hadoop 3
+ * kafka 5
+ * storm 8
+ * storm 2
+ * spark 7
+ * hadoop 3
+ * spark 2
+ * kafka 10
+ * apache 3
+ * kafka 30
+ * kafka 100
+ * storm 20
+ * spark 9
+ * spark 20
+ * spark 100
+ * hadoop 2
+ * hadoop 90
+ * hadoop 1
+ * storm 6
+ * kafka 15
  */
 public class SparkMapAvg {
 
@@ -46,10 +67,8 @@ public class SparkMapAvg {
                 return new Tuple2<Integer, Integer>(x._1 + y._1,x._2+y._2);
             }
         });
-        JavaPairRDD<String, Integer> result = javaPairRDD.mapValues(new Function<Tuple2<Integer, Integer>, Integer>() {
-            public Integer call(Tuple2<Integer, Integer> x) throws Exception {
-                return x._1() / x._2();
-            }
+        JavaPairRDD<String, Integer> result = javaPairRDD.mapValues(x -> {
+            return x._1() / x._2();
         });
 
         System.out.println(result.collect());

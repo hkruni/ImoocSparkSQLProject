@@ -16,7 +16,16 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 /**
- * 统计各个单词出现的次数
+ * 统计各个单词出现的次数，input1.txt的数据
+ * INFO This is a message with content
+ * INFO This is some other content
+ *
+ * INFO Here are more messages
+ * WARN This is a warning
+ *
+ * ERROR Something bad happened
+ * WARN More details on the bad thing
+ * INFO back to normal messages
  */
 public class SparkMap {
 
@@ -42,11 +51,11 @@ public class SparkMap {
 //        System.out.println(df2.count());
 
 
-        JavaPairRDD<String, Integer> rdd = spark.read().textFile("D:/spark_data/input.txt").toJavaRDD().filter(
-                line -> {
+        JavaPairRDD<String, Integer> rdd = spark.read().textFile("D:/spark_data/input.txt").toJavaRDD()
+                .filter(line -> {//先过滤剔除空行
                     return line != null && line.length() > 0;
                 }
-        ).flatMapToPair(line -> {
+        ).flatMapToPair(line -> {//每行拆分每个元素生成(元素名称 1)的pair
             String[] strs = line.split(" ");
             ArrayList<Tuple2<String, Integer>> list = new ArrayList<Tuple2<String, Integer>>();
             for (String str : strs) {
@@ -54,7 +63,7 @@ public class SparkMap {
                 list.add(tuple2);
             }
             return list.iterator();
-        }).reduceByKey((x,y) ->{
+        }).reduceByKey((x,y) ->{//对相同key的pair的value进行求和
             return x +y;
         });
 
