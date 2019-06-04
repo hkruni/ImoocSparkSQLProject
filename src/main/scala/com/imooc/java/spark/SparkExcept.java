@@ -7,6 +7,10 @@ import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
+
+/**
+ * 求交集并集
+ */
 public class SparkExcept {
 
     public static void main(String[] args) {

@@ -7,6 +7,10 @@ import org.apache.spark.sql.Encoders;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
+
+/**
+ * 从数据库加载数据
+ */
 public class Sparksql {
 
     public static void main(String[] args) {
@@ -69,11 +73,14 @@ public class Sparksql {
         Dataset<Count> ds = spark.sql("select m.name,count(1) as count\n" +
                 "from newsmodules m left join news n on m.id=n.module_id\n" +
                 "GROUP BY m.name").as(Encoders.bean(Count.class));
-        ds.foreach(new ForeachFunction<Count>() {
-            public void call(Count count) throws Exception {
-                System.out.println(count);
-            }
-        });
+
+        ds.write().format("parquet").save("D:/data-count-parquet");
+
+//        ds.foreach(new ForeachFunction<Count>() {
+//            public void call(Count count) throws Exception {
+//                System.out.println(count);
+//            }
+//        });
 
 
 //        spark.sql("select * from news where title  like  '美%'").show();
